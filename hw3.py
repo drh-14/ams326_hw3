@@ -5,11 +5,9 @@ import matplotlib.pyplot as plt
 import random
 
 class Q1:
-    def __init__(self, n, x1, x2, y1, y2):
+    def __init__(self, n, y1, y2):
         self.n = n
         self.diameters = [1/ 10, 2 / 10, 3/10, 4/10, 5/10, 6/10, 7/10, 8/10, 9/10, 10/10, 15/10, 20/10, 30/10]
-        self.x1 = x1
-        self.x2 = x2
         self.y1 = y1
         self.y2 = y2
         
@@ -17,18 +15,18 @@ class Q1:
         return int(np.floor(y + r) - np.ceil(y - r) + 1)
          
     def solve(self):
-        cross_count = [[0 for _ in self.diameters] for _ in range(5)]
+        cross_count = [[0 for _ in self.diameters] for _ in range(4)]
         for i,d in enumerate(self.diameters):
             radius = d / 2
             for _ in range(self.n):
-              center = (random.uniform(radius, 100 - radius), random.uniform(radius, 100 - radius))
-              cross_num = self.num_crosses(center[1], radius)
+              center_y = random.uniform(self.y1, self.y2)
+              cross_num = self.num_crosses(center_y, radius)
               cross_count[cross_num][i] += 1
-        probabilities = [[0 for _ in self.diameters] for _ in range(6)]
+        probabilities = [[0 for _ in self.diameters] for _ in range(4)]
         for i in range(len(cross_count)):
             for j in range(len(cross_count[0])):
                 probabilities[i][j] = cross_count[i][j] / self.n
-        for i in range(5):
+        for i in range(4):
             plt.plot(self.diameters, probabilities[i], marker = "o", markerfacecolor='red', label = f"{i} {"line" if i == 1 else "lines"}")
         plt.xlabel("Diameter")
         plt.ylabel("Probability")
@@ -122,9 +120,9 @@ class Q3:
         plt.show()
 
 if __name__ == "__main__":
-    #Q1 = Q1(4444444, 0, 100, 0, 100)
-    #Q1.solve()
-    #Q3 = Q3()
-    #Q3.solve()
-    Q2 = Q2(100, 0.01)
+    Q1 = Q1(4444444, 100, 200)
+    Q1.solve()
+    Q2 = Q2(100, 0.001)
     Q2.solve()
+    Q3 = Q3()
+    Q3.solve()
